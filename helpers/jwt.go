@@ -9,6 +9,7 @@ import (
 )
 
 type ClaimToken struct {
+	UserID   int    `json:"user_id"`
 	Username string `json:"username"`
 	Fullname string `json:"full_name"`
 	jwt.RegisteredClaims
@@ -24,6 +25,7 @@ var jwtSecret = []byte(GetEnv("APP_SECRET", ""))
 func GenerateToken(ctx context.Context, userID int, username string, fullname string, tokenType string, now time.Time) (string, error) {
 
 	claimToken := ClaimToken{
+		UserID:   userID,
 		Username: username,
 		Fullname: fullname,
 		RegisteredClaims: jwt.RegisteredClaims{
